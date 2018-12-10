@@ -16,16 +16,17 @@ public class Cigarette : MonoBehaviour {
 	}
 
 	public IEnumerator Drag(Head head) {
-		//GetComponentInChildren<ParticleSystem>().Play();
-		yield return null;
+        //GetComponentInChildren<ParticleSystem>().Play();
+        //yield return null;
 
-		/*
+        //Debug.Log("Drag");
 		float emission = mMin;
 		float time = 0;
 
 		while (gameObject.activeSelf) {
 			//Target brightness
 			float brightness = head.TestForAudioInput() ? mMax : mMin;
+            //Debug.Log("Test for audio to brightness: " + brightness);
 
 			//Lerp
 			time += Time.deltaTime * 0.01f;
@@ -35,13 +36,17 @@ public class Cigarette : MonoBehaviour {
 			SetLightColor(emission);
 			yield return null;
 		}
-		*/
+		
 	}
 
 	private void SetLightColor(float emission) {
+
+        //Debug.Log("setLightColor");
 		//Figure out target color
 		Color baseColor = mLightMaterial.color;
 		Color finalColor = baseColor * Mathf.LinearToGammaSpace(emission);
+
+        //Debug.Log(finalColor);
 		
 		//Set in material
 		mLightMaterial.SetColor("_EmissionColor", finalColor);

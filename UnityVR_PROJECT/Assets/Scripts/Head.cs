@@ -23,33 +23,15 @@ public class Head : MonoBehaviour {
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = Microphone.Start(null, true, 10, 44100);
-
-        //Debug.Log(audioSource.clip);
         audioSource.loop = true;
 
         foreach (var device in Microphone.devices)
         {
             Debug.Log(device);
             //Debug.Log(Microphone.IsRecording(device));
-        }
-
-        //audioSource.Play();
-
-        //if (Microphone.GetPosition(null) > 0) { }
-        //Debug.Log("start playing... position is " + Microphone.GetPosition(null));
-        //audioSource.Play();
-
-        
+        }        
     }
 
-    private void Update()
-    {
-        //Debug.Log("start playing... position is " + Microphone.GetPosition(null));
-
-
-        //TestForAudioInput();
-        
-    }
 
     private void OnTriggerEnter(Collider other) {
 		//Debug.Log("Entered head collider: " + other);
@@ -65,26 +47,28 @@ public class Head : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        var cigarette = other.gameObject.GetComponent<Cigarette>();
+       // var cigarette = other.gameObject.GetComponent<Cigarette>();
+       // var cigarette = other.gameObject.GetComponent<Cigarette>();
 
-        if (cigarette)
-        {
-            TestForAudioInput();
-        }        
+        //if (cigarette)
+        //{
+            //TestForAudioInput();
+        //}        
     }
 
     private void OnTriggerExit(Collider other) {
 		//Debug.Log("Exited head collider: " + other);
-		if (other.gameObject.tag == "Cigarette") {
-			if (mCurrentSmoke != null) {
-				StopCoroutine(mCurrentSmoke);
+		//if (other.gameObject.tag == "Cigarette") {
+			//if (mCurrentSmoke != null) {
+				//StopCoroutine(mCurrentSmoke);
 
                 if (isInput)
                 {
+                    //Debug.Log("-----------------------------------------------------SMOKED----------------------------------------------------------------");
                     mParticleSystem.Play();
                 }
-			}
-		}
+			//}
+		//}
 	}
 
     public float Sum(params float[] array)
@@ -124,19 +108,19 @@ public class Head : MonoBehaviour {
         //float sum = Sum(samples);
         //float averageSample = (float)(sum / samples.Length) * 10000;
 
-        Debug.Log(samples);
+        //Debug.Log(samples);
 
-        float averageSample = Average(samples) * 10000;
+        float averageSample = Average(samples) * 1000000;
 
-        Debug.Log("samples: " + averageSample);
+
 
 
 
         //If within threshold
-        isInput = averageSample < mThreshold ? true: false;
+        isInput = averageSample > mThreshold ? true: false;
         //bool isInput = audioSource < mThreshold ? true: false;
 
-        Debug.Log("isInput: " + isInput);
+        //Debug.Log("samples: " + averageSample + " & isInput: " + isInput);
 		return isInput;
 	}
 
